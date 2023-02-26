@@ -23,5 +23,9 @@ export const aluminum_bar: Resource = "aluminum bar";
 export const high_tech_parts: Resource = "high tech parts";
 export const reinforced_concrete: Resource = "reinforced concrete";
 
-export const depot_2: Resource = "depot_2";
+export const depot_2: Resource = "depot 2";
 export const train: Resource = "train";
+export const rail: Resource = "rail";
+export const rail_stop: Resource = "rail stop";
+export const waste_disposal: Resource = "waste disposal";
+export const recycle_center: Resource = "recycle center";

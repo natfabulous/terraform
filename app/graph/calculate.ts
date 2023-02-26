@@ -12,9 +12,9 @@ export function findRecipeReverse(resource: Resource) {
   return recipeOut[0];
 }
 
-export function treeFromResource(resource: Resource) {
+export function treeFromResource(resource: Resource, targetOutput: number) {
   const primaryRecipe = findRecipeReverse(resource);
-  const root = new TreeNode(primaryRecipe, 12);
+  const root = new TreeNode(primaryRecipe, targetOutput);
   populateTree(root);
   return root;
 }
@@ -89,7 +89,7 @@ export function annotateTree(node: TreeNode) {
 
 export function test() {
   console.log("finished compiling, program begin");
-  const tree = treeFromResource(r.train);
+  const tree = treeFromResource(r.reinforced_concrete, 180);
   readTree(tree);
 }
 

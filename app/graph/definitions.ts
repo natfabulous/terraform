@@ -52,9 +52,24 @@ export const allRecipes = [
 
   // Output Only
   new Recipe(
-    "build_train",
+    "build train",
     [rt(r.high_tech_parts, 4), rt(r.mechanical_parts, 4)],
     12,
     [rt(r.train, 1)]
   ),
+  new Recipe("build rail", [rt(r.concrete, 1), rt(r.steel_bar, 1)], 12, [
+    rt(r.rail, 8),
+  ]),
+  new Recipe("build rail stop", [rt(r.concrete, 1), rt(r.steel_bar, 1)], 12, [
+    rt(r.rail_stop, 1),
+  ]),
+  new Recipe(
+    "build recycle center",
+    [rt(r.concrete, 1), rt(r.high_tech_parts, 1)],
+    12,
+    [rt(r.recycle_center, 1)]
+  ),
+  new Recipe("build waste disposal", [rt(r.concrete, 1)], 12, [
+    rt(r.waste_disposal, 1),
+  ]),
 ];
