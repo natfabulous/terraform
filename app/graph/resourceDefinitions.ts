@@ -1,31 +1,69 @@
 import { Resource } from "./declarations";
 
-export const none: Resource = "none";
+const none: Resource = "none";
 
-export const iron_ore: Resource = "iron ore";
-export const sulfur_ore: Resource = "sulfur ore";
-export const aluminum_ore: Resource = "aluminum ore";
-export const fluorite_ore: Resource = "fluorite ore";
-export const metal_waste: Resource = "metal waste";
-export const plastic_waste: Resource = "plastic waste";
-export const organic_waste: Resource = "organic waste";
-export const oxygen: Resource = "oxygen";
-export const carbon: Resource = "carbon";
-export const water: Resource = "water";
-export const nitrogen: Resource = "nitrogen";
+const iron_ore: Resource = "iron ore";
+const sulfur_ore: Resource = "sulfur ore";
+const aluminum_ore: Resource = "aluminum ore";
+const fluorite_ore: Resource = "fluorite ore";
+const metal_waste: Resource = "metal waste";
+const plastic_waste: Resource = "plastic waste";
+const organic_waste: Resource = "organic waste";
+const oxygen: Resource = "oxygen";
+const carbon: Resource = "carbon";
+const water: Resource = "water";
+const nitrogen: Resource = "nitrogen";
 
-export const concrete: Resource = "concrete";
-export const polymer_bar: Resource = "polymer bar";
-export const steel_bar: Resource = "steel bar";
-export const mechanical_parts: Resource = "mechanical parts";
-export const aluminum_bar: Resource = "aluminum bar";
+const concrete: Resource = "concrete";
+const polymer_bar: Resource = "polymer bar";
+const steel_bar: Resource = "steel bar";
+const mechanical_parts: Resource = "mechanical parts";
+const aluminum_bar: Resource = "aluminum bar";
 
-export const high_tech_parts: Resource = "high tech parts";
-export const reinforced_concrete: Resource = "reinforced concrete";
+const high_tech_parts: Resource = "high tech parts";
+const reinforced_concrete: Resource = "reinforced concrete";
 
-export const depot_2: Resource = "depot 2";
-export const train: Resource = "train";
-export const rail: Resource = "rail";
-export const rail_stop: Resource = "rail stop";
-export const waste_disposal: Resource = "waste disposal";
-export const recycle_center: Resource = "recycle center";
+const depot_2: Resource = "depot 2";
+const train: Resource = "train";
+const rail: Resource = "rail";
+const rail_stop: Resource = "rail stop";
+const waste_disposal: Resource = "waste disposal";
+const recycle_center: Resource = "recycle center";
+
+const allResources = {
+  none,
+  iron_ore,
+  sulfur_ore,
+  aluminum_ore,
+  fluorite_ore,
+  metal_waste,
+  plastic_waste,
+  organic_waste,
+  oxygen,
+  carbon,
+  water,
+  nitrogen,
+  concrete,
+  polymer_bar,
+  steel_bar,
+  mechanical_parts,
+  aluminum_bar,
+  high_tech_parts,
+  reinforced_concrete,
+  depot_2,
+  train,
+  rail,
+  rail_stop,
+  waste_disposal,
+  recycle_center,
+};
+const noInputs = {
+  none,
+  metal_waste,
+  plastic_waste,
+  organic_waste,
+};
+const deepCopyAR = JSON.parse(JSON.stringify(allResources));
+Object.keys(noInputs).map((key) => delete deepCopyAR[key]);
+export const allSearchSafeResources = deepCopyAR;
+export default allResources;

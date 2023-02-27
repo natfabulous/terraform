@@ -1,7 +1,6 @@
 import chalk from "chalk";
-import { Resource, Recipe, TreeNode, ResourceTuple } from "./declarations";
+import { Resource, Recipe, RecipeNode, ResourceTuple } from "./declarations";
 import { allRecipes } from "./definitions";
-import * as r from "./resourceDefinitions";
 
 export function findRecipeReverse(resource: Resource) {
   const recipeOut = allRecipes.filter((recipe: Recipe) => {
@@ -14,16 +13,16 @@ export function findRecipeReverse(resource: Resource) {
 
 export function treeFromResource(resource: Resource, targetOutput: number) {
   const primaryRecipe = findRecipeReverse(resource);
-  const root = new TreeNode(primaryRecipe, targetOutput);
+  const root = new RecipeNode(primaryRecipe, targetOutput);
   populateTree(root);
   return root;
 }
 
 // build tree as a side-effect. input is output
-export function populateTree(node: TreeNode | null) {
+export function populateTree(node: RecipeNode | null) {
   node?.recipe.inputs.map((resourceTuple: ResourceTuple) => {
     if (resourceTuple.resource !== "none") {
-      const childNode = new TreeNode(
+      const childNode = new RecipeNode(
         findRecipeReverse(resourceTuple.resource),
         resourceTuple.number * node.numRecipes,
         node.rank + 1
@@ -41,7 +40,7 @@ function prt(rt: ResourceTuple) {
     console.log(chalk.blue(rt));
   }
 }
-function printNodeVerbose(node: TreeNode) {
+function printNodeVerbose(node: RecipeNode) {
   console.log(
     `parent requires ${chalk.greenBright(node.parentRequires)} items`
   );
@@ -52,45 +51,12 @@ function printNodeVerbose(node: TreeNode) {
   node.recipe.inputs.map(prt);
   console.log("//////////////////////////////");
 }
-function printNode(node: TreeNode) {
-  console.log(
-    `${chalk.redBright(
-      "--".repeat(node.rank) + (node.rank ? ">" : "")
-    )}${chalk.blueBright(node.recipe.name)} needs ${chalk.greenBright(
-      Math.ceil(node.numRecipes)
-    )} "buildings" to produce ${chalk.yellowBright(
-      (node.numRecipes * node.recipe.outputs[0].number).toFixed(0)
-    )} items`
-  );
-}
-export function readTree(node: TreeNode) {
-  // printNodeVerbose(node);
-  printNode(node);
+
+export function readTree(node: RecipeNode) {
+  console.log(node.stringify());
   if (node.descendants.length !== 0) {
-    node.recipe.inputs.map((rt: ResourceTuple) => {
-      const rname = rt.resource;
-    });
-    node.descendants.map((d: TreeNode) => {
+    node.descendants.map((d: RecipeNode) => {
       readTree(d);
     });
   }
 }
-export function annotateTree(node: TreeNode) {
-  // printNode(node);
-  if (node.descendants.length !== 0) {
-    node.recipe.inputs.map((rt: ResourceTuple) => {
-      const rname = rt.resource;
-    });
-    node.descendants.map((d: TreeNode) => {
-      readTree(d);
-    });
-  }
-}
-
-export function test() {
-  console.log("finished compiling, program begin");
-  const tree = treeFromResource(r.reinforced_concrete, 180);
-  readTree(tree);
-}
-
-test();

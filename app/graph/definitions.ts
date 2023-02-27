@@ -1,5 +1,5 @@
 import { Recipe, ResourceTuple } from "./declarations";
-import * as r from "./resourceDefinitions";
+import r from "./resourceDefinitions";
 
 const rt = (resource: string, number: number) => {
   return new ResourceTuple(resource, number);

@@ -1,9 +1,4 @@
-// export class Resource {
-//   resourceName: string;
-//   constructor(name: string) {
-//     this.resourceName = name;
-//   }
-// }
+import chalk from "chalk";
 
 export type Resource = string;
 
@@ -48,15 +43,32 @@ export class Building {
     this.recipes = recipes;
   }
 }
-
-export class TreeNode {
+export class SimpleNode {
+  description: string;
+  children: SimpleNode[];
+  constructor(description: string) {
+    this.description = description;
+    this.children = [];
+  }
+}
+export class RecipeNode {
   parentRequires: number;
   numRecipes: number;
   recipe: Recipe;
   rank: number;
-  descendants: TreeNode[];
+  descendants: RecipeNode[];
   initNode() {
     this.numRecipes = this.parentRequires / this.recipe.outputs[0].number;
+  }
+
+  stringify() {
+    return `${chalk.redBright(
+      "--".repeat(this.rank) + (this.rank ? ">" : "")
+    )}${chalk.blueBright(this.recipe.name)} needs ${chalk.greenBright(
+      Math.ceil(this.numRecipes)
+    )} "buildings" to produce ${chalk.yellowBright(
+      (this.numRecipes * this.recipe.outputs[0].number).toFixed(0)
+    )} items`;
   }
 
   constructor(recipe: Recipe, parentRequires: number, rank: number = 0) {
