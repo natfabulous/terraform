@@ -3,7 +3,7 @@ import { ActionArgs } from "@remix-run/server-runtime";
 import { allSearchSafeResources } from "~/graph/resourceDefinitions";
 import { treeFromResource } from "~/graph/calculate";
 import { RecipeNode } from "~/graph/declarations";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function loader() {
   return allSearchSafeResources;

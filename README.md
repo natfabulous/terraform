@@ -86,8 +86,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create terraform-583c
-  fly apps create terraform-583c-staging
+  fly apps create planbterraform-692f
+  fly apps create planbterraform-692f-staging
   ```
 
   > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
@@ -109,8 +109,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app terraform-583c
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app terraform-583c-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app planbterraform-692f
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app planbterraform-692f-staging
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
@@ -118,8 +118,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh
-  fly volumes create data --size 1 --app terraform-583c
-  fly volumes create data --size 1 --app terraform-583c-staging
+  fly volumes create data --size 1 --app planbterraform-692f
+  fly volumes create data --size 1 --app planbterraform-692f-staging
   ```
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.

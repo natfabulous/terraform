@@ -1,5 +1,3 @@
-import chalk from "chalk";
-
 export type Resource = string;
 
 export class ResourceTuple {
@@ -59,16 +57,6 @@ export class RecipeNode {
   descendants: RecipeNode[];
   initNode() {
     this.numRecipes = this.parentRequires / this.recipe.outputs[0].number;
-  }
-
-  stringify() {
-    return `${chalk.redBright(
-      "--".repeat(this.rank) + (this.rank ? ">" : "")
-    )}${chalk.blueBright(this.recipe.name)} needs ${chalk.greenBright(
-      Math.ceil(this.numRecipes)
-    )} "buildings" to produce ${chalk.yellowBright(
-      (this.numRecipes * this.recipe.outputs[0].number).toFixed(0)
-    )} items`;
   }
 
   constructor(recipe: Recipe, parentRequires: number, rank: number = 0) {
