@@ -34,14 +34,16 @@ export default function calculator() {
     <>
       <h1>Select Output and number</h1>
       <Form method="post">
-        <select name="resourceName" onChange={focusNumInput}>
+        <select
+          defaultValue={"high tech parts"}
+          name="resourceName"
+          onChange={focusNumInput}
+        >
           {Object.keys(resources)
             .sort((a, b) => a.localeCompare(b))
             .map((key, i) => {
               return (
-                <option
-                  selected={resources[key] === "high tech parts" ? true : false}
-                >
+                <option key={resources[key]} value={resources[key]}>
                   {resources[key]}
                 </option>
               );
@@ -76,12 +78,12 @@ export function readTree(node: RecipeNode): JSX.Element[] {
 function nodeStringFormat(node: RecipeNode) {
   return (
     <>
-      <text className="text-blue-500">{node.recipe.name}</text> needs{" "}
-      <text className="text-green-500">{Math.ceil(node.numRecipes)}</text>{" "}
+      <span className="text-blue-500">{node.recipe.name}</span> needs{" "}
+      <span className="text-green-500">{Math.ceil(node.numRecipes)}</span>{" "}
       "buildings" to produce{" "}
-      <text className="text-orange-500">
+      <span className="text-orange-500">
         {(node.numRecipes * node.recipe.outputs[0].number).toFixed(0)}
-      </text>{" "}
+      </span>{" "}
       items
     </>
   );
