@@ -10,11 +10,11 @@ export function findRecipeReverse(resource: Resource) {
   return recipeOut[0];
 }
 
-export function treeFromResource(resource: Resource, targetOutput: number) {
+export function generateTree(resource: Resource, targetOutput: number) {
   const primaryRecipe = findRecipeReverse(resource);
-  const root = new RecipeNode(primaryRecipe, targetOutput);
-  populateTree(root);
-  return root;
+  const tree = new RecipeNode(primaryRecipe, targetOutput);
+  populateTree(tree);
+  return tree;
 }
 
 // build tree as a side-effect. input is output

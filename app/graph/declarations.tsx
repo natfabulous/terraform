@@ -3,6 +3,7 @@ export type Resource = string;
 export class ResourceTuple {
   resource: Resource;
   number: number;
+
   constructor(resource: Resource, number: number) {
     this.resource = resource;
     this.number = number;
@@ -12,52 +13,49 @@ export class ResourceTuple {
 export class Recipe {
   name: string;
   inputs: ResourceTuple[];
-  speed: number;
+  building: Building;
   outputs: ResourceTuple[];
-  simplifyResourceRates() {
+  speed: number;
+
+  constructor(
+    name: string,
+    inputs: ResourceTuple[],
+    building: Building,
+    outputs: ResourceTuple[]
+  ) {
+    this.name = name;
+    this.inputs = inputs;
+    this.building = building;
+    this.outputs = outputs;
+    this.speed = this.building.speed;
+    this.simplifyResourceRates();
+  }
+
+  private simplifyResourceRates() {
     const f = (rt: ResourceTuple) => {
       rt.number *= this.speed;
     };
     this.inputs.map(f);
     this.outputs.map(f);
   }
-  constructor(
-    name: string,
-    inputs: ResourceTuple[],
-    speed: number,
-    outputs: ResourceTuple[]
-  ) {
-    this.name = name;
-    this.inputs = inputs;
-    this.speed = speed;
-    this.outputs = outputs;
-    this.simplifyResourceRates();
-  }
 }
 
 export class Building {
-  recipes: Recipe[];
-  constructor(recipes: Recipe[]) {
-    this.recipes = recipes;
+  name: string;
+  speed: number;
+
+  constructor(name: string, speed: number) {
+    this.name = name;
+    this.speed = speed;
   }
 }
-export class SimpleNode {
-  description: string;
-  children: SimpleNode[];
-  constructor(description: string) {
-    this.description = description;
-    this.children = [];
-  }
-}
+
 export class RecipeNode {
   parentRequires: number;
   numRecipes: number;
   recipe: Recipe;
   rank: number;
   descendants: RecipeNode[];
-  initNode() {
-    this.numRecipes = this.parentRequires / this.recipe.outputs[0].number;
-  }
 
   constructor(recipe: Recipe, parentRequires: number, rank: number = 0) {
     this.recipe = recipe;
@@ -66,5 +64,9 @@ export class RecipeNode {
     this.numRecipes = 1;
     this.descendants = [];
     this.initNode();
+  }
+
+  private initNode() {
+    this.numRecipes = this.parentRequires / this.recipe.outputs[0].number;
   }
 }

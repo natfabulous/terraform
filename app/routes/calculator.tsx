@@ -1,12 +1,17 @@
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+} from "@remix-run/react";
 import { ActionArgs } from "@remix-run/server-runtime";
 import { allSearchSafeResources } from "~/graph/resourceDefinitions";
-import { treeFromResource } from "~/graph/calculate";
+import { generateTree } from "~/graph/calculate";
 import { RecipeNode } from "~/graph/declarations";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function loader() {
-  return allSearchSafeResources;
+  return Object.values(allSearchSafeResources);
 }
 
 export async function action({ request }: ActionArgs) {
@@ -14,14 +19,22 @@ export async function action({ request }: ActionArgs) {
 
   const resourceName = data.get("resourceName");
   const quantity = data.get("quantity");
-  const tree = treeFromResource(resourceName as string, +quantity!);
+  const tree = generateTree(resourceName as string, +quantity!);
   return tree;
 }
 
-export default function calculator() {
-  const resources = useLoaderData();
-  const tree = useActionData();
+export default () => {
+  const defaultNumberOfItems = 30;
+  const listOfResources = useLoaderData();
+  const [listOfItems] = useState(listOfResources);
+  const [numberOfItems, setNumberOfItems] = useState(defaultNumberOfItems);
+  const [currentlySelectedItem, setCurrentlySelectedItem] = useState(
+    listOfItems[0]
+  );
+  const fetcher = useFetcher();
+
   const inputRef = useRef<HTMLInputElement>(null);
+
   const focusNumInput = () => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -29,42 +42,78 @@ export default function calculator() {
     }
   };
 
-  useEffect(focusNumInput, []);
+  const onChangeHandler = (value: string) => {
+    setCurrentlySelectedItem(value);
+    focusNumInput();
+  };
+
+  const inputOnChangeHandler = (value: number) => {
+    setNumberOfItems(() => {
+      return Number(value) < 1 ? 1 : Number(value);
+    });
+  };
+
+  useEffect(() => {
+    fetcher.submit(
+      {
+        resourceName: currentlySelectedItem,
+        outputNumber: numberOfItems.toString(),
+      },
+      { method: "post", action: "/api/calculateTree" }
+    );
+  }, [numberOfItems, currentlySelectedItem]);
+
   return (
-    <>
-      <h1>Select Output and number</h1>
-      <Form method="post">
+    <div>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          inputOnChangeHandler(numberOfItems);
+        }}
+      >
         <select
-          defaultValue={"high tech parts"}
           name="resourceName"
-          onChange={focusNumInput}
+          onChange={(e) => {
+            e.preventDefault();
+            onChangeHandler(e.target.value);
+          }}
+          value={currentlySelectedItem}
         >
-          {Object.keys(resources)
-            .sort((a, b) => a.localeCompare(b))
-            .map((key, i) => {
-              return (
-                <option key={resources[key]} value={resources[key]}>
-                  {resources[key]}
-                </option>
-              );
-            })}
+          {listOfItems
+            .sort((a: string, b: string) => a.localeCompare(b))
+            .map((item: string) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
         </select>
-        <input type="number" name="quantity" defaultValue={30} ref={inputRef} />
+        <input
+          type="number"
+          name="quantity"
+          autoFocus={true}
+          value={numberOfItems}
+          onChange={(e) => {
+            e.preventDefault();
+            inputOnChangeHandler(Number(e.target.value));
+          }}
+        />
+        {fetcher.state === "submitting" ? "Loading tree data..." : null}
       </Form>
-      {tree ? readTree(tree) : ""}
-    </>
+      {fetcher.data ? buildTree(JSON.parse(fetcher.data)) : null}
+    </div>
   );
-}
-export function readTree(node: RecipeNode): JSX.Element[] {
+};
+
+export function buildTree(node: RecipeNode): JSX.Element[] {
   if (node.descendants.length !== 0) {
     return [
       <>
-        {nodeStringFormat(node)}
+        {nodeJSXFormat(node)}
         {node.descendants.map((d: RecipeNode) => {
           return (
             <>
               <ul className="ml-4 list-none">
-                <li>{readTree(d)}</li>
+                <li>{buildTree(d)}</li>
               </ul>
             </>
           );
@@ -72,17 +121,18 @@ export function readTree(node: RecipeNode): JSX.Element[] {
       </>,
     ];
   } else {
-    return [nodeStringFormat(node)];
+    return [nodeJSXFormat(node)];
   }
 }
-function nodeStringFormat(node: RecipeNode) {
+
+function nodeJSXFormat(node: RecipeNode) {
   return (
     <>
       <span className="text-blue-500">{node.recipe.name}</span> needs{" "}
       <span className="text-green-500">{Math.ceil(node.numRecipes)}</span>{" "}
       "buildings" to produce{" "}
       <span className="text-orange-500">
-        {(node.numRecipes * node.recipe.outputs[0].number).toFixed(0)}
+        {Math.ceil(node.numRecipes * node.recipe.outputs[0].number)}
       </span>{" "}
       items
     </>

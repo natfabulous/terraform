@@ -29,6 +29,7 @@ export default function App() {
       </head>
       <body className="h-full">
         <Outlet />
+        <Scripts/>
         <LiveReload />
       </body>
     </html>
