@@ -127,6 +127,17 @@ const noOutput = {
   rail,
   rail_stop,
   train,
+
+  // Terraforming
+  greenhouse_gas_generator,
+  dam_element,
+
+  // Plants
+  pine_tree,
+  eucalyptus_tree,
+
+  // Special Buildings
+  landmark_tower,
 };
 const allResources = {
   ...noInputs,

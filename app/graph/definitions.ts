@@ -111,7 +111,7 @@ export const allRecipes = [
     "atmosperic_extractor",
     [rt(r.mechanical_parts, 3), rt(r.aluminum_bar, 1)],
     assembly_plant,
-    [rt(r.supply_center, 1)]
+    [rt(r.atmospheric_extractor, 1)]
   ),
   new Recipe("waste_disposal", [rt(r.mechanical_parts, 1)], assembly_plant, [
     rt(r.waste_disposal, 1),
@@ -164,4 +164,31 @@ export const allRecipes = [
     assembly_plant,
     [rt(r.train, 1)]
   ),
+
+  // Terraforming
+  new Recipe(
+    "greenhouse_gas_generator",
+    [rt(r.mechanical_parts, 3), rt(r.hightech_parts, 1)],
+    assembly_plant,
+    [rt(r.greenhouse_gas_generator, 1)]
+  ),
+  new Recipe("dam_element", [rt(r.reinforced_concrete, 3)], assembly_plant, [
+    rt(r.dam_element, 1),
+  ]),
+
+  // Plants
+  new Recipe("pine_tree", [rt(r.carbon, 3), rt(r.water, 3)], assembly_plant, [
+    rt(r.pine_tree, 1),
+  ]),
+  new Recipe(
+    "eucalyptus_tree",
+    [rt(r.carbon, 3), rt(r.water, 3)],
+    assembly_plant,
+    [rt(r.eucalyptus_tree, 1)]
+  ),
+
+  // Special Buildings
+  new Recipe("landmark_tower", [rt(r.concrete, 3)], assembly_plant, [
+    rt(r.landmark_tower, 1),
+  ]),
 ];
