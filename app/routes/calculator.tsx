@@ -128,13 +128,12 @@ export function buildTree(node: RecipeNode): JSX.Element[] {
 function nodeJSXFormat(node: RecipeNode) {
   return (
     <>
-      <span className="text-blue-500">{node.recipe.name}</span> needs{" "}
-      <span className="text-green-500">{Math.ceil(node.numRecipes)}</span>{" "}
-      "buildings" to produce{" "}
+      <span className="text-orange-500">{Math.ceil(node.numRecipes)}</span>{" "}
+      <span className="text-blue-500">{node.recipe.building.name}</span> produce{" "}
       <span className="text-orange-500">
         {Math.ceil(node.numRecipes * node.recipe.outputs[0].number)}
       </span>{" "}
-      items
+      <span className="text-blue-500">{node.recipe.outputs[0].resource}</span>
     </>
   );
 }
