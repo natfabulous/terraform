@@ -45,43 +45,50 @@ export const allRecipes = [
   ]),
   new Recipe("o2", [rt(r.none, 0)], atmospheric_extractor, [rt(r.o2, 1)]),
   new Recipe("nitrogen", [rt(r.none, 0)], ice_extractor, [rt(r.nitrogen, 1)]),
-  new Recipe("water", [rt(r.none, 0)], ice_extractor, [rt(r.water, 1)]),
-  // new Recipe("water", [rt(r.none, 0)], pumping_station, [rt(r.water, 1)]),
+  // new Recipe("water", [rt(r.none, 0)], ice_extractor, [rt(r.water, 1)]),
+  new Recipe("water", [rt(r.none, 0)], pumping_station, [rt(r.water, 1)]),
 
   // Manufactured Products
-  new Recipe("make_mechanical_parts", [rt(r.steel_bar, 1)], factory, [
+  new Recipe("mechanical_parts", [rt(r.steel_bar, 1)], factory, [
     rt(r.mechanical_parts, 1),
   ]),
   new Recipe(
-    "make_reinforced_concrete",
+    "reinforced_concrete",
     [rt(r.steel_bar, 1), rt(r.concrete, 1)],
     factory,
     [rt(r.reinforced_concrete, 1)]
   ),
-  new Recipe("factory_polymer_bar", [rt(r.carbon, 3)], factory, [
-    rt(r.polymer_bar, 1),
-  ]),
+  new Recipe("polymer_bar", [rt(r.carbon, 3)], factory, [rt(r.polymer_bar, 1)]),
   new Recipe(
-    "make_high_tech_parts",
+    "hightech_parts",
     [rt(r.aluminum_bar, 2), rt(r.polymer_bar, 1)],
     factory,
     [rt(r.hightech_parts, 3)]
   ),
   new Recipe(
-    "make_tempered_steel",
+    "tempered_steel",
     [rt(r.steel_bar, 4), rt(r.nitrogen, 1)],
     factory,
     [rt(r.tempered_steel, 3)]
   ),
+  new Recipe(
+    "composite",
+    [rt(r.tempered_steel, 1), rt(r.polymer_bar, 1)],
+    factory,
+    [rt(r.composite, 1)]
+  ),
+  new Recipe("compost_factory", [rt(r.carbon, 2), rt(r.nitrogen, 1)], factory, [
+    rt(r.compost, 1),
+  ]),
+  new Recipe("food", [rt(r.compost, 1), rt(r.water, 4)], greenhouse, [
+    rt(r.food, 2),
+  ]),
   new Recipe(
     "make_compost_carbon",
     [rt(r.carbon, 2), rt(r.nitrogen, 1)],
     factory,
     [rt(r.compost, 1)]
   ),
-  new Recipe("make_food", [rt(r.compost, 1), rt(r.water, 4)], greenhouse, [
-    rt(r.food, 2),
-  ]),
 
   // Industry
   new Recipe("extractor", [rt(r.steel_bar, 3)], assembly_plant, [
@@ -97,11 +104,14 @@ export const allRecipes = [
     rt(r.assembly_plant, 1),
   ]),
   new Recipe(
-    "build_depot_MK2",
+    "depot_MK2",
     [rt(r.aluminum_bar, 1), rt(r.polymer_bar, 1)],
     assembly_plant,
     [rt(r.depot_MK2, 1)]
   ),
+  new Recipe("depot_MK3", [rt(r.composite, 2)], assembly_plant, [
+    rt(r.depot_MK3, 1),
+  ]),
 
   // Advanced Industry
   new Recipe("supply_center", [rt(r.concrete, 4)], assembly_plant, [

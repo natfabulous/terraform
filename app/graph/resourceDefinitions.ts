@@ -1,5 +1,6 @@
 import { Resource } from "./declarations";
 
+// TODO convert to database
 const none: Resource = "none";
 
 // Minerals
@@ -28,9 +29,9 @@ const reinforced_concrete: Resource = "reinforced_concrete";
 const polymer_bar: Resource = "polymer_bar";
 const hightech_parts: Resource = "hightech_parts";
 const tempered_steel: Resource = "tempered_steel";
+const composite: Resource = "composite";
 const compost: Resource = "compost";
 const food: Resource = "food";
-// const composite: Resource = "composite";
 
 // Industry
 const extractor: Resource = "extractor";
@@ -38,7 +39,7 @@ const depot_MK1: Resource = "depot_MK1";
 const factory: Resource = "factory";
 const assembly_plant: Resource = "assembly_plant";
 const depot_MK2: Resource = "depot_MK2";
-// const depot_MK3: Resource = "depot_MK3";
+const depot_MK3: Resource = "depot_MK3";
 
 // Advanced Industry
 const supply_center: Resource = "supply_center";
@@ -72,8 +73,8 @@ const noInputs = {
   none,
   // Cities Waste
   metal_waste,
-  plastic_waste,
   organic_waste,
+  plastic_waste,
 };
 
 const intermediary = {
@@ -98,9 +99,9 @@ const intermediary = {
   polymer_bar,
   hightech_parts,
   tempered_steel,
+  composite,
   compost,
   food,
-  //composite,
 };
 const noOutput = {
   // Industry
@@ -109,7 +110,7 @@ const noOutput = {
   factory,
   assembly_plant,
   depot_MK2,
-  // depot_MK3,
+  depot_MK3,
 
   // Advanced Industry
   supply_center,
