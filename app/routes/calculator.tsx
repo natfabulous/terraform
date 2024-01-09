@@ -1,14 +1,9 @@
-import {
-  Form,
-  useActionData,
-  useFetcher,
-  useLoaderData,
-} from "@remix-run/react";
+import { Form, useFetcher, useLoaderData } from "@remix-run/react";
 import { ActionArgs } from "@remix-run/server-runtime";
 import { allSearchSafeResources } from "~/graph/resourceDefinitions";
 import { generateTree } from "~/graph/calculate";
 import { RecipeNode } from "~/graph/declarations";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 export function loader() {
   return Object.values(allSearchSafeResources);
@@ -52,7 +47,12 @@ export default () => {
       return Number(value) < 1 ? 1 : Number(value);
     });
   };
-
+  // let Calculator = null;
+  // useEffect(() => {
+  //   (async () => {
+  //     Calculator = await (await import("react-mac-calculator")).Calculator();
+  //   })();
+  // });
   useEffect(() => {
     fetcher.submit(
       {
@@ -100,6 +100,8 @@ export default () => {
         {fetcher.state === "submitting" ? "Loading tree data..." : null}
       </Form>
       {fetcher.data ? buildTree(JSON.parse(fetcher.data)) : null}
+      <br />
+      <div className="calculatorDiv" />
     </div>
   );
 };

@@ -182,9 +182,12 @@ export const allRecipes = [
     assembly_plant,
     [rt(r.greenhouse_gas_generator, 1)]
   ),
-  new Recipe("dam_element", [rt(r.reinforced_concrete, 3)], assembly_plant, [
-    rt(r.dam_element, 1),
-  ]),
+  new Recipe(
+    "dam_element",
+    [rt(r.reinforced_concrete, 2), rt(r.tempered_steel, 1)],
+    assembly_plant,
+    [rt(r.dam_element, 1)]
+  ),
 
   // Plants
   new Recipe("pine_tree", [rt(r.carbon, 3), rt(r.water, 3)], assembly_plant, [
