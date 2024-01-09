@@ -14,6 +14,7 @@ const atmospheric_extractor = new Building("atmospheric_extractor", 12);
 const recycle_center = new Building("recycle_center", 30);
 const ice_extractor = new Building("ice_extractor", 5);
 const greenhouse = new Building("greenhouse", 30);
+const greenhouse_gas_generator = new Building("greenhouse_gas_generator", 30);
 const pumping_station = new Building("pumping_station", 12);
 
 export const allRecipes = [
@@ -187,6 +188,18 @@ export const allRecipes = [
     [rt(r.reinforced_concrete, 2), rt(r.tempered_steel, 1)],
     assembly_plant,
     [rt(r.dam_element, 1)]
+  ),
+  new Recipe(
+    "nf3",
+    [rt(r.nitrogen, 1), rt(r.fluorite, 1)],
+    greenhouse_gas_generator,
+    [rt(r.nf3, 1)]
+  ),
+  new Recipe(
+    "sf6",
+    [rt(r.sulfur, 1), rt(r.fluorite, 1)],
+    greenhouse_gas_generator,
+    [rt(r.sf6, 1)]
   ),
 
   // Plants

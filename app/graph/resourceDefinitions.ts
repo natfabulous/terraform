@@ -61,6 +61,8 @@ const train: Resource = "train";
 // Terraforming
 const greenhouse_gas_generator: Resource = "greenhouse_gas_generator";
 const dam_element: Resource = "dam_element";
+const nf3: Resource = "nf3";
+const sf6: Resource = "sf6";
 
 // Plants
 const pine_tree: Resource = "pine_tree";
@@ -132,6 +134,8 @@ const noOutput = {
   // Terraforming
   greenhouse_gas_generator,
   dam_element,
+  nf3,
+  sf6,
 
   // Plants
   pine_tree,
